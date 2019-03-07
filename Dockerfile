@@ -16,12 +16,11 @@ RUN mysql_install_db --user=mysql
 RUN /usr/bin/mysqld_safe --nowatch && sleep 5 && mysqladmin -v create mydns && mysql -e "create user mydns@localhost identified by 'mydns'" && mysql -e "grant all on mydns.* to mydns@localhost" && mydns --create-tables | mysql mydns
 ADD mydns.conf /etc/mydns.conf
 
-VOLUME /var/lib/mysql
-
 WORKDIR /
 ADD entrypoint.sh /
 CMD /entrypoint.sh
 
-
+VOLUME /var/lib/mysql
+EXPOSE 53
 
 
